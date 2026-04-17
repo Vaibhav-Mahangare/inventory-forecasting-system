@@ -19,7 +19,6 @@ public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long inventoryId;
-
     private Integer quantity;
     private Integer reorderPoint;      //min value if less than it then reorder
     private LocalDateTime lastUpdated;

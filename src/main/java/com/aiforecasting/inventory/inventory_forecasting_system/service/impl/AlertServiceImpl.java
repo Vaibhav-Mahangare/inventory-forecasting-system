@@ -79,10 +79,9 @@ public class AlertServiceImpl implements AlertService {
         alertRepository.delete(alert);
     }
 
-    // -------------------------------------------------------
+
     // Core Business Logic — Auto Low Stock Alert
     // Called by InventoryService when quantity <= reorderPoint
-    // -------------------------------------------------------
     @Override
     public void createLowStockAlert(Product product, Warehouse warehouse) {
         Alert alert = new Alert();
