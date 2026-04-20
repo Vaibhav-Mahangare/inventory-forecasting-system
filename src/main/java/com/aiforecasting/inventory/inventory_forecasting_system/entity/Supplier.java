@@ -1,5 +1,6 @@
 package com.aiforecasting.inventory.inventory_forecasting_system.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public class Supplier {
     private String contactEmail;
     private String phone;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "supplier")
     private List<PurchaseOrder> purchaseOrders;
 

@@ -4,7 +4,9 @@ import com.aiforecasting.inventory.inventory_forecasting_system.dto.request.Sale
 import com.aiforecasting.inventory.inventory_forecasting_system.dto.response.SaleResponse;
 import com.aiforecasting.inventory.inventory_forecasting_system.entity.*;
 import com.aiforecasting.inventory.inventory_forecasting_system.repository.*;
+import com.aiforecasting.inventory.inventory_forecasting_system.service.AlertService;
 import com.aiforecasting.inventory.inventory_forecasting_system.service.InventoryService;
+import com.aiforecasting.inventory.inventory_forecasting_system.service.PurchaseOrderService;
 import com.aiforecasting.inventory.inventory_forecasting_system.service.SaleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,8 @@ public class SaleServiceImpl implements SaleService {
     private final ProductRepository productRepository;
     private final WarehouseRepository warehouseRepository;
     private final InventoryRepository inventoryRepository;
+    private final AlertService alertService;
+    private final PurchaseOrderService purchaseOrderService;
 
     @Override
     public SaleResponse createSale(SaleRequest request) {
@@ -41,6 +45,11 @@ public class SaleServiceImpl implements SaleService {
         // Deduct and save — this will also trigger low stock check via InventoryService
         inventory.setQuantity(inventory.getQuantity() - request.getQuantitySold());
         inventoryRepository.save(inventory);
+
+        if (inventory.getQuantity() <= inventory.getReorderPoint()) {
+            alertService.createLowStockAlert(inventory.getProduct(), inventory.getWarehouse());
+            purchaseOrderService.autoCreatePurchaseOrder(inventory.getProduct());
+        }
 
         Sale sale = new Sale();
         sale.setQuantitySold(request.getQuantitySold());

@@ -1,5 +1,6 @@
 package com.aiforecasting.inventory.inventory_forecasting_system.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,15 +30,19 @@ public class Product {
     private LocalDateTime createdAt;
 
     // Relationships
+    @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<Inventory> inventories;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<Sale> sales;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<Forecast> forecasts;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<PurchaseOrder> purchaseOrders;
 
