@@ -1,5 +1,6 @@
 package com.aiforecasting.inventory.inventory_forecasting_system.dto.ml;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,30 +11,25 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MLForecastResult {
 
-    @JsonProperty("product_id")
+    @JsonAlias({"product_id", "productId"})
     private Long productId;
 
-    @JsonProperty("predicted_7_days")
+    @JsonAlias({"predicted_7_days", "predicted7Days"})
     private Integer predicted7Days;
 
-    @JsonProperty("predicted_15_days")
+    @JsonAlias({"predicted_15_days", "predicted15Days"})
     private Integer predicted15Days;
 
-    @JsonProperty("predicted_30_days")
+    @JsonAlias({"predicted_30_days", "predicted30Days"})
     private Integer predicted30Days;
 
-    @JsonProperty("mae")
     private Double mae;
-
-    @JsonProperty("rmse")
     private Double rmse;
-
-    @JsonProperty("mape")
     private Double mape;
 
-    @JsonProperty("accuracy_label")
+    @JsonAlias({"accuracy_label", "accuracyLabel"})
     private String accuracyLabel;
 
-    @JsonProperty("model_status")
+    @JsonAlias({"model_status", "modelStatus"})
     private String modelStatus;
 }

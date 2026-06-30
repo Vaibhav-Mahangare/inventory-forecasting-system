@@ -50,7 +50,7 @@ public class MLForecastService {
 
         // Fetch last 30 days of sales
         LocalDate endDate = LocalDate.now();
-        LocalDate startDate = endDate.minusDays(30);
+        LocalDate startDate = endDate.minusDays(60);
 
         List<Sale> recentSales = saleRepository
                 .findByProductAndSaleDateBetween(product, startDate, endDate);
@@ -119,7 +119,7 @@ public class MLForecastService {
         List<MLForecastRequest> productRequests = allProducts.stream()
                 .map(product -> {
                     LocalDate endDate = LocalDate.now();
-                    LocalDate startDate = endDate.minusDays(30);
+                    LocalDate startDate = endDate.minusDays(60);
 
                     List<Sale> recentSales = saleRepository
                             .findByProductAndSaleDateBetween(
